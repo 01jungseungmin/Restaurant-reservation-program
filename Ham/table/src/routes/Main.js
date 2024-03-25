@@ -5,8 +5,13 @@ import { restaurantArray } from "../contentData/restaurantInfo";
 import goldStar from "../assets/goldStar.png";
 import grayStar from "../assets/grayStar.png";
 import { imageData } from "../contentData/imageData";
+import { Link } from "react-router-dom";
+import { useUser } from "../context/AuthContext";
+
 const Main = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const { userId } = useUser();
 
   useEffect(() => {
     const intervalId = setInterval(nextSlide, 5000);
@@ -19,16 +24,16 @@ const Main = () => {
     );
   };
 
-  let a = restaurantArray.map((e) => {
-    const no = [];
+  let starScore = restaurantArray.map((e) => {
+    const starScoreArr = [];
 
     for (let i = 0; i < e[3]; i++) {
-      no.push(<img width={16} height={16} src={goldStar}></img>);
+      starScoreArr.push(<img width={16} height={16} src={goldStar}></img>);
     }
     for (let i = 0; i < e[4]; i++) {
-      no.push(<img width={16} height={16} src={grayStar}></img>);
+      starScoreArr.push(<img width={16} height={16} src={grayStar}></img>);
     }
-    return no;
+    return starScoreArr;
   });
 
   const RestaurantList = ({ title, subTitle }) => {
@@ -41,34 +46,34 @@ const Main = () => {
         <div className={styles.restaurantList_wrapper}>
           {restaurantArray.map((restaurant, i) => (
             <div className={styles.restaurant_wrapper} key={restaurant[0]}>
-              <a href={`/restaurant/${restaurant[5]}`}>
+              <Link to={`/restaurant/${restaurant[5]}`}>
                 <h3>
                   {restaurant[0]} ({restaurant[1]})
                 </h3>
-                {a[i]}
+                {starScore[i]}
                 <img
                   className={styles.restaurantImg}
                   src={restaurant[2]}
                   alt={restaurant[0]}
                 />
-              </a>
+              </Link>
             </div>
           ))}
         </div>
         <div className={styles.restaurantList_wrapper}>
           {restaurantArray.map((restaurant, i) => (
             <div className={styles.restaurant_wrapper} key={restaurant[0]}>
-              <a href={`/restaurant/${restaurant[5]}`}>
+              <Link to={`/restaurant/${restaurant[5]}`}>
                 <h3>
                   {restaurant[0]} ({restaurant[1]})
                 </h3>
-                {a[i]}
+                {starScore[i]}
                 <img
                   className={styles.restaurantImg}
                   src={restaurant[2]}
                   alt={restaurant[0]}
                 />
-              </a>
+              </Link>
             </div>
           ))}
         </div>
